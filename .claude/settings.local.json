@@ -7,7 +7,8 @@
       "Bash(node backend/server.js)",
       "Bash(New-Item -ItemType Directory -Force \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\\\\.github\\\\workflows\")",
       "Bash(Out-Null)",
-      "Bash(Write-Host \"done\")"
+      "Bash(Write-Host \"done\")",
+      "Bash(npm install *)"
     ]
   }
 }

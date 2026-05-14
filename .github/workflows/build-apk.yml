@@ -35,6 +35,9 @@ jobs:
       - name: Sync Capacitor to Android
         run: ./node_modules/.bin/cap sync android
 
+      - name: Write google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
+
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 

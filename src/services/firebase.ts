@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBt03AYAbvjU2e1DFDfX5KxBl3HZV3yERQ',
@@ -12,3 +14,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const auth = getAuth(app);
+
+export async function signInWithGoogle() {
+  const result = await FirebaseAuthentication.signInWithGoogle();
+  const credential = GoogleAuthProvider.credential(result.credential?.idToken);
+  return signInWithCredential(auth, credential);
+}
