@@ -57,7 +57,7 @@ jobs:
       - name: Verify keystore
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: keytool -list -keystore android/app/budgettracker.jks -storepass "$KEYSTORE_PASSWORD"
+        run: keytool -list -keystore android/app/budgettracker.jks -storepass "$KEYSTORE_PASSWORD" -storetype PKCS12
 
       - name: Make gradlew executable
         run: chmod +x android/gradlew

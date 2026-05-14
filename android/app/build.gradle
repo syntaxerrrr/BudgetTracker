@@ -22,6 +22,7 @@ android {
             storePassword System.getenv("KEYSTORE_PASSWORD")
             keyAlias "budgettracker"
             keyPassword System.getenv("KEYSTORE_PASSWORD")
+            storeType "PKCS12"
         }
     }
     buildTypes {
