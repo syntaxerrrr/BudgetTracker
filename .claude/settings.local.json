@@ -4,7 +4,10 @@
       "Bash(Get-ChildItem -Path \"D:\\\\Lei\\\\BudgetTracker\" -Recurse -Force)",
       "Bash(Select-Object FullName, PSIsContainer)",
       "Bash(Sort-Object FullName)",
-      "Bash(node backend/server.js)"
+      "Bash(node backend/server.js)",
+      "Bash(New-Item -ItemType Directory -Force \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\\\\.github\\\\workflows\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Host \"done\")"
     ]
   }
 }
