@@ -8,7 +8,15 @@
       "Bash(New-Item -ItemType Directory -Force \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\\\\.github\\\\workflows\")",
       "Bash(Out-Null)",
       "Bash(Write-Host \"done\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(where java *)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Program Files/Microsoft//**)",
+      "PowerShell(Test-Path *)",
+      "PowerShell([System.Environment]::SetEnvironmentVariable\\(\"JAVA_HOME\", \"C:\\\\Program Files\\\\Microsoft\\\\jdk-21.0.11.10-hotspot\", \"Machine\"\\); $oldPath = [System.Environment]::GetEnvironmentVariable\\(\"Path\", \"Machine\"\\); [System.Environment]::SetEnvironmentVariable\\(\"Path\", \"$oldPath;C:\\\\Program Files\\\\Microsoft\\\\jdk-21.0.11.10-hotspot\\\\bin\", \"Machine\"\\); Write-Host \"Done! JAVA_HOME and PATH updated.\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
