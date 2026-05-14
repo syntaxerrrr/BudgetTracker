@@ -36,11 +36,11 @@ jobs:
         run: ./node_modules/.bin/cap sync android
 
       - name: Write google-services.json
-        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' | base64 --decode > android/app/google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' | tr -d '[:space:]' | base64 --decode > android/app/google-services.json
 
       - name: Decode keystore
         run: |
-          echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 --decode > android/app/budgettracker.jks
+          echo '${{ secrets.KEYSTORE_BASE64 }}' | tr -d '[:space:]' | base64 --decode > android/app/budgettracker.jks
 
       - name: Make gradlew executable
         run: chmod +x android/gradlew
