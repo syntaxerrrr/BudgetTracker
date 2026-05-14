@@ -43,7 +43,21 @@ jobs:
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: python3 -c "import base64,os; d=os.environ['KEYSTORE_BASE64'].strip(); open('android/app/budgettracker.jks','wb').write(base64.b64decode(d+'=='))"
+        run: |
+          python3 -c "
+          import base64, os
+          d = os.environ['KEYSTORE_BASE64'].strip()
+          missing = (4 - len(d) % 4) % 4
+          d += '=' * missing
+          data = base64.b64decode(d)
+          open('android/app/budgettracker.jks', 'wb').write(data)
+          print(f'Keystore written: {len(data)} bytes')
+          "
+
+      - name: Verify keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: keytool -list -keystore android/app/budgettracker.jks -storepass "$KEYSTORE_PASSWORD"
 
       - name: Make gradlew executable
         run: chmod +x android/gradlew
