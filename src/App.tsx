@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Plus,
   TrendingDown,
@@ -465,51 +466,12 @@ export default function App() {
 
   // ── Main App ─────────────────────────────────────────────────────────────
   return (
+    <>
     <div className={cn('min-h-screen font-sans overflow-hidden relative transition-colors duration-300', dm ? 'bg-[#080a12] text-white' : 'bg-slate-100 text-zinc-900')}>
       <div className="fixed top-[-15%] left-[-15%] w-[65%] h-[45%] rounded-full blur-[130px] pointer-events-none bg-indigo-600/15" />
       <div className="fixed bottom-[-15%] right-[-15%] w-[65%] h-[45%] rounded-full blur-[130px] pointer-events-none bg-violet-600/10" />
 
       <div className={cn('max-w-md mx-auto min-h-screen relative shadow-2xl overflow-hidden border-x transition-colors duration-300', dm ? 'bg-white/[0.03] border-white/[0.06]' : 'bg-white/60 backdrop-blur-md border-zinc-200/80')}>
-
-        {/* Update Banner */}
-        <AnimatePresence>
-          {updateStatus !== 'idle' && (
-            <motion.div
-              initial={{ y: -60, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -60, opacity: 0 }}
-              className="relative z-50 mx-3 mt-3 rounded-2xl overflow-hidden bg-indigo-600 shadow-lg shadow-indigo-600/30"
-            >
-              {updateStatus === 'downloading' ? (
-                <div className="px-4 py-3">
-                  <div className="flex justify-between items-center mb-2">
-                    <p className="text-white text-sm font-bold">Downloading update...</p>
-                    <p className="text-white/80 text-sm font-bold">{downloadPercent}%</p>
-                  </div>
-                  <div className="w-full bg-white/20 rounded-full h-1.5">
-                    <div
-                      className="bg-white rounded-full h-1.5 transition-all duration-300"
-                      style={{ width: `${downloadPercent}%` }}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <button
-                  className="w-full px-4 py-3 flex items-center justify-between"
-                  onClick={async () => {
-                    if (updateBundle) await CapacitorUpdater.set({ id: updateBundle.id });
-                  }}
-                >
-                  <div>
-                    <p className="text-white text-sm font-bold text-left">Update ready!</p>
-                    <p className="text-white/70 text-xs text-left">Tap to restart and apply</p>
-                  </div>
-                  <div className="bg-white/20 rounded-xl px-3 py-1.5 text-white text-xs font-bold">Restart</div>
-                </button>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Header */}
         <header className="p-5 pb-3 z-10 relative">
@@ -768,5 +730,35 @@ export default function App() {
 
       <style dangerouslySetInnerHTML={{ __html: `.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}` }} />
     </div>
+
+    {/* OTA Update Banner — rendered over every screen via portal */}
+    {updateStatus !== 'idle' && createPortal(
+      <div className="fixed top-4 left-4 right-4 z-[9999] rounded-2xl overflow-hidden bg-indigo-600 shadow-xl shadow-indigo-600/40">
+        {updateStatus === 'downloading' ? (
+          <div className="px-4 py-3">
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-white text-sm font-bold">Downloading update...</p>
+              <p className="text-white/80 text-sm font-bold">{downloadPercent}%</p>
+            </div>
+            <div className="w-full bg-white/20 rounded-full h-1.5">
+              <div className="bg-white rounded-full h-1.5 transition-all duration-300" style={{ width: `${downloadPercent}%` }} />
+            </div>
+          </div>
+        ) : (
+          <button
+            className="w-full px-4 py-3 flex items-center justify-between"
+            onClick={async () => { if (updateBundle) await CapacitorUpdater.set({ id: updateBundle.id }); }}
+          >
+            <div>
+              <p className="text-white text-sm font-bold text-left">Update ready!</p>
+              <p className="text-white/70 text-xs text-left">Tap to restart and apply</p>
+            </div>
+            <div className="bg-white/20 rounded-xl px-3 py-1.5 text-white text-xs font-bold">Restart</div>
+          </button>
+        )}
+      </div>,
+      document.body
+    )}
+    </>
   );
 }
