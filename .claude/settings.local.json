@@ -20,7 +20,9 @@
       "Bash(Get-ChildItem -Path \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\" -Force)",
       "Bash(Select-Object Name, PSIsContainer)",
       "Bash(keytool -list -keystore budgettracker.jks -storetype PKCS12 -storepass \"\")",
-      "Bash(keytool -list -keystore budgettracker.jks -storetype JKS -storepass \"\")"
+      "Bash(keytool -list -keystore budgettracker.jks -storetype JKS -storepass \"\")",
+      "Bash(xargs grep -l \"signInWithGoogle\\\\|NoCredential\\\\|filterByAuthorized\")",
+      "Bash(npx tsc *)"
     ]
   }
 }
