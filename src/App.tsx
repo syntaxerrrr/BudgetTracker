@@ -125,20 +125,22 @@ export default function App() {
 
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) return;
-    const listeners: Array<{ remove: () => void }> = [];
     (async () => {
-      const dlListener = await CapacitorUpdater.addListener('download', (e) => {
+      try {
+        const latest = await CapacitorUpdater.getLatest();
+        if (!latest.url) return;
         setUpdateStatus('downloading');
-        setDownloadPercent(e.percent);
-      });
-      listeners.push(dlListener);
-      const readyListener = await CapacitorUpdater.addListener('updateAvailable', (e) => {
-        setUpdateBundle(e.bundle);
+        const dlListener = await CapacitorUpdater.addListener('download', (e) => {
+          setDownloadPercent(e.percent);
+        });
+        const bundle = await CapacitorUpdater.download({ url: latest.url, version: latest.version });
+        dlListener.remove();
+        setUpdateBundle(bundle);
         setUpdateStatus('ready');
-      });
-      listeners.push(readyListener);
+      } catch {
+        // no update or network error — stay idle
+      }
     })();
-    return () => listeners.forEach(l => l.remove());
   }, []);
 
   useEffect(() => {
