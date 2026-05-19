@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
 
       - name: Upload bundle to Capgo
-        run: npx @capgo/cli bundle upload -a ${{ secrets.CAPGO_TOKEN }} --ignore-metadata-errors
+        run: npx @capgo/cli bundle upload -a ${{ secrets.CAPGO_TOKEN }}
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
