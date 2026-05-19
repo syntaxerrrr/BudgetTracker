@@ -285,7 +285,7 @@ export default function App() {
               setAuthError('');
               setAuthSubmitting(true);
               try { await signInWithGoogle(); }
-              catch { setAuthError('Sign-in failed. Try again.'); }
+              catch (err: unknown) { setAuthError(`Sign-in failed: ${err instanceof Error ? err.message : String(err)}`); }
               finally { setAuthSubmitting(false); }
             }}
             className={cn(
