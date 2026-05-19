@@ -16,7 +16,9 @@
       "PowerShell([System.Environment]::SetEnvironmentVariable\\(\"JAVA_HOME\", \"C:\\\\Program Files\\\\Microsoft\\\\jdk-21.0.11.10-hotspot\", \"Machine\"\\); $oldPath = [System.Environment]::GetEnvironmentVariable\\(\"Path\", \"Machine\"\\); [System.Environment]::SetEnvironmentVariable\\(\"Path\", \"$oldPath;C:\\\\Program Files\\\\Microsoft\\\\jdk-21.0.11.10-hotspot\\\\bin\", \"Machine\"\\); Write-Host \"Done! JAVA_HOME and PATH updated.\")",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)"
     ]
   }
 }
