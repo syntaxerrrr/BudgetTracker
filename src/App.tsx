@@ -25,6 +25,8 @@ import {
   Tooltip as RechartsTooltip,
   Legend,
 } from 'recharts';
+import { Capacitor } from '@capacitor/core';
+import { CapacitorUpdater, type BundleInfo } from '@capgo/capacitor-updater';
 import { cn } from './lib/utils';
 import { api, scheduleApi, type Schedule } from './services/api';
 import { auth, signInWithGoogle } from './services/firebase';
@@ -116,6 +118,28 @@ export default function App() {
     amount: 0, category: 'Food', type: 'expense',
     date: new Date().toISOString().split('T')[0], note: '',
   });
+
+  const [updateStatus, setUpdateStatus] = useState<'idle' | 'downloading' | 'ready'>('idle');
+  const [downloadPercent, setDownloadPercent] = useState(0);
+  const [updateBundle, setUpdateBundle] = useState<BundleInfo | null>(null);
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+    const listeners: Array<{ remove: () => void }> = [];
+    (async () => {
+      const dlListener = await CapacitorUpdater.addListener('download', (e) => {
+        setUpdateStatus('downloading');
+        setDownloadPercent(e.percent);
+      });
+      listeners.push(dlListener);
+      const readyListener = await CapacitorUpdater.addListener('updateAvailable', (e) => {
+        setUpdateBundle(e.bundle);
+        setUpdateStatus('ready');
+      });
+      listeners.push(readyListener);
+    })();
+    return () => listeners.forEach(l => l.remove());
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -444,6 +468,46 @@ export default function App() {
       <div className="fixed bottom-[-15%] right-[-15%] w-[65%] h-[45%] rounded-full blur-[130px] pointer-events-none bg-violet-600/10" />
 
       <div className={cn('max-w-md mx-auto min-h-screen relative shadow-2xl overflow-hidden border-x transition-colors duration-300', dm ? 'bg-white/[0.03] border-white/[0.06]' : 'bg-white/60 backdrop-blur-md border-zinc-200/80')}>
+
+        {/* Update Banner */}
+        <AnimatePresence>
+          {updateStatus !== 'idle' && (
+            <motion.div
+              initial={{ y: -60, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -60, opacity: 0 }}
+              className="relative z-50 mx-3 mt-3 rounded-2xl overflow-hidden bg-indigo-600 shadow-lg shadow-indigo-600/30"
+            >
+              {updateStatus === 'downloading' ? (
+                <div className="px-4 py-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <p className="text-white text-sm font-bold">Downloading update...</p>
+                    <p className="text-white/80 text-sm font-bold">{downloadPercent}%</p>
+                  </div>
+                  <div className="w-full bg-white/20 rounded-full h-1.5">
+                    <div
+                      className="bg-white rounded-full h-1.5 transition-all duration-300"
+                      style={{ width: `${downloadPercent}%` }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <button
+                  className="w-full px-4 py-3 flex items-center justify-between"
+                  onClick={async () => {
+                    if (updateBundle) await CapacitorUpdater.set({ id: updateBundle.id });
+                  }}
+                >
+                  <div>
+                    <p className="text-white text-sm font-bold text-left">Update ready!</p>
+                    <p className="text-white/70 text-xs text-left">Tap to restart and apply</p>
+                  </div>
+                  <div className="bg-white/20 rounded-xl px-3 py-1.5 text-white text-xs font-bold">Restart</div>
+                </button>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Header */}
         <header className="p-5 pb-3 z-10 relative">
