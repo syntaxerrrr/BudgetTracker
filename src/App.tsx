@@ -481,7 +481,7 @@ export default function App() {
                 {firstName[0].toUpperCase()}
               </div>
               <div>
-                <p className={cn('text-[10px] font-bold uppercase tracking-[0.2em]', dm ? 'text-white/30' : 'text-zinc-400')}>Budget Tracker</p>
+                <p className={cn('text-[10px] font-bold uppercase tracking-[0.2em]', dm ? 'text-white/30' : 'text-zinc-400')}>Budget Tracker v2</p>
                 <p className="text-base font-bold tracking-tight">Hi, {firstName} 👋</p>
               </div>
             </div>
