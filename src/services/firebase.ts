@@ -19,7 +19,9 @@ export const auth = getAuth(app);
 export async function signInWithGoogle() {
   const result = await FirebaseAuthentication.signInWithGoogle({
     webClientId: '416408320429-al902om5ndeej9qn4ha3rvu42qe8g8dj.apps.googleusercontent.com',
-  });
+    // Credential Manager (new API) fails on some devices; legacy flow is more reliable
+    useCredentialManager: false,
+  } as Parameters<typeof FirebaseAuthentication.signInWithGoogle>[0]);
   const credential = GoogleAuthProvider.credential(result.credential?.idToken);
   return signInWithCredential(auth, credential);
 }
