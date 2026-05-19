@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
 
       - name: Upload bundle to Capgo
-        run: npx @capgo/cli bundle upload -a ${{ secrets.CAPGO_TOKEN }} --bundle 1.0.${{ github.run_number }} --channel production
+        run: npx @capgo/cli bundle upload -a ${{ secrets.CAPGO_TOKEN }} --bundle 1.1.${{ github.run_number }} --channel production
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
