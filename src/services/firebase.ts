@@ -17,7 +17,9 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 export async function signInWithGoogle() {
-  const result = await FirebaseAuthentication.signInWithGoogle();
+  const result = await FirebaseAuthentication.signInWithGoogle({
+    webClientId: '416408320429-al902om5ndeej9qn4ha3rvu42qe8g8dj.apps.googleusercontent.com',
+  });
   const credential = GoogleAuthProvider.credential(result.credential?.idToken);
   return signInWithCredential(auth, credential);
 }
