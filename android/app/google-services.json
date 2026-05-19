@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "416408320429",
+    "project_id": "budget-tracker-87402",
+    "storage_bucket": "budget-tracker-87402.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416408320429:android:684dc9109eb64f8becc924",
+        "android_client_info": {
+          "package_name": "com.budgettracker.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416408320429-9dfkrn4ciqk7964g435jns3bqn9rlfri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.budgettracker.app",
+            "certificate_hash": "c47bc4b7c1d2d6b0df6e1bebd3d66662efa6b34d"
+          }
+        },
+        {
+          "client_id": "416408320429-al902om5ndeej9qn4ha3rvu42qe8g8dj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChojqrEEJZgFSGMbXwgkyCfCwRtU2c85s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416408320429-al902om5ndeej9qn4ha3rvu42qe8g8dj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
