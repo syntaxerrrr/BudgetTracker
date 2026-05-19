@@ -18,7 +18,9 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(Get-ChildItem -Path \"D:\\\\Lei\\\\github_proj\\\\BudgetTracker\" -Force)",
-      "Bash(Select-Object Name, PSIsContainer)"
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(keytool -list -keystore budgettracker.jks -storetype PKCS12 -storepass \"\")",
+      "Bash(keytool -list -keystore budgettracker.jks -storetype JKS -storepass \"\")"
     ]
   }
 }
