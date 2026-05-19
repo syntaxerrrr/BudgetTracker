@@ -60,3 +60,11 @@ jobs:
           name: budget-tracker-release
           path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 7
+
+      - name: Distribute to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: 1:416408320429:android:684dc9109eb64f8becc924
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          testers: zhayauguis@gmail.com
+          file: android/app/build/outputs/apk/release/app-release.apk
