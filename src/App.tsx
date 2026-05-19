@@ -275,7 +275,7 @@ export default function App() {
           <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-indigo-600/40 mb-6">
             <Wallet className="w-9 h-9 text-white" />
           </div>
-          <h1 className="text-3xl font-black tracking-tight mb-2">Budget Tracker</h1>
+          <h1 className="text-3xl font-black tracking-tight mb-2">Budget Tracker ✓</h1>
           <p className={cn('text-sm mb-10', dm ? 'text-white/40' : 'text-zinc-400')}>Track your money, own your future.</p>
 
           <button
