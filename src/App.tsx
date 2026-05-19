@@ -128,6 +128,7 @@ export default function App() {
     (async () => {
       try {
         const latest = await CapacitorUpdater.getLatest();
+        alert('Capgo getLatest: ' + JSON.stringify(latest));
         if (!latest.url) return;
         setUpdateStatus('downloading');
         const dlListener = await CapacitorUpdater.addListener('download', (e) => {
@@ -137,8 +138,8 @@ export default function App() {
         dlListener.remove();
         setUpdateBundle(bundle);
         setUpdateStatus('ready');
-      } catch {
-        // no update or network error — stay idle
+      } catch (err) {
+        alert('Capgo error: ' + String(err));
       }
     })();
   }, []);
